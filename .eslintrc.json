@@ -1,0 +1,39 @@
+{
+    "extends": ["universe/native", "plugin:react-hooks/recommended"],
+    "plugins": ["@typescript-eslint"],
+    "rules": {
+      "react-hooks/rules-of-hooks": "error",
+      "react-hooks/exhaustive-deps": [
+        "error",
+        {
+          "enableDangerousAutofixThisMayCauseInfiniteLoops": true
+        }
+      ],
+      "no-shadow": "off",
+      "@typescript-eslint/no-shadow": ["error"],
+      "no-use-before-define": "off",
+      "@typescript-eslint/no-use-before-define": ["error"],
+      "no-redeclare": "off",
+      "@typescript-eslint/no-redeclare": ["error"],
+      "no-unused-vars": "off",
+      "prefer-promise-reject-errors": "off",
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          "args": "all",
+          "argsIgnorePattern": "^_",
+          "ignoreRestSiblings": true
+        }
+      ],
+      "no-unused-expressions": "off",
+      "@typescript-eslint/no-unused-expressions": [
+        "error",
+        {
+          "allowShortCircuit": true,
+          "allowTernary": true,
+          "allowTaggedTemplates": true
+        }
+      ]
+    }
+  }
+  
