@@ -2,6 +2,10 @@ import styled from "styled-components/native";
 
 import { CustomText } from "../../components/CustomText";
 
+interface DayProps {
+  $isSelected: boolean;
+}
+
 export const Container = styled.View`
   flex: 1;
   justify-content: center;
@@ -57,10 +61,16 @@ export const CalendarContent = styled.View`
   column-gap: 34px;
 `;
 
-export const Day = styled.TouchableOpacity`
+export const Day = styled.TouchableOpacity<DayProps>`
   width: 28px;
   height: 28px;
   justify-content: center;
   align-items: center;
   border-radius: 14px;
+  background-color: ${({ $isSelected }) =>
+    $isSelected ? "#00a19b" : "transparent"};
+`;
+
+export const Chevron = styled.TouchableOpacity`
+  padding: 2px 8px;
 `;

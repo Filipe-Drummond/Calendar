@@ -1,10 +1,12 @@
 import { Feather } from "@expo/vector-icons";
+import { useEffect } from "react";
 import { TouchableOpacity, View } from "react-native";
 
 import {
   CalendarContent,
   CalendarHeader,
   CalendarWrapper,
+  Chevron,
   ChevronsContainer,
   Container,
   Day,
@@ -12,12 +14,24 @@ import {
   Title,
   Year,
 } from "./styles";
+import { monthNames, useCalendar } from "../../hooks/useCalendar";
 
 export const Calendar = () => {
-  const days = [
-    27, 28, 29, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
-    19, 20, 21, 22, 23, 24, 25, 26, 27, 18, 19, 30, 31, 1, 2,
-  ];
+  const {
+    days,
+    selectedDay,
+    currentMonth,
+    currentYear,
+    createMonth,
+    onNextMonth,
+    onPreviousMonth,
+    onSelectedDay,
+  } = useCalendar();
+
+  useEffect(() => {
+    createMonth();
+  }, [createMonth]);
+
   return (
     <Container>
       <View>
@@ -25,25 +39,26 @@ export const Calendar = () => {
         <CalendarWrapper>
           <CalendarHeader>
             <Month>
-              March <Year>2024</Year>
+              {monthNames[currentMonth]} <Year>{currentYear}</Year>
             </Month>
             <ChevronsContainer>
-              <TouchableOpacity
-                style={{ paddingHorizontal: 4, paddingVertical: 2 }}
-              >
+              <Chevron onPress={onPreviousMonth}>
                 <Feather name="chevron-left" size={15} color="#fff" />
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={{ paddingHorizontal: 4, paddingVertical: 2 }}
-              >
+              </Chevron>
+              <TouchableOpacity onPress={onNextMonth}>
                 <Feather name="chevron-right" size={15} color="#fff" />
               </TouchableOpacity>
             </ChevronsContainer>
           </CalendarHeader>
           <CalendarContent>
-            {days.map((day, index) => (
-              <Day key={index}>
-                <Month color="#fff">{day}</Month>
+            {days.map(({ day, isCurrentMonth }, index) => (
+              <Day
+                key={index}
+                $isSelected={selectedDay === day && isCurrentMonth}
+                onPress={() => onSelectedDay(day)}
+                disabled={!isCurrentMonth}
+              >
+                <Month color={isCurrentMonth ? "#fff" : "#424242"}>{day}</Month>
               </Day>
             ))}
           </CalendarContent>
